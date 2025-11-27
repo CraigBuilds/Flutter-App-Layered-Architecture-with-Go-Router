@@ -20,6 +20,9 @@ import 'ui_pages.dart';
 // - Views call controller methods on user actions
 // - Controllers mutate the model and call onModelChanged
 // - onModelChanged updates the ValueNotifier<AppModel>
+//
+// Currently, there is a single ValueNotifier<AppModel> that holds the entire application state, so all views are rebuilt on any change.
+// This could be extended in teh future for more fine-grained reactivity, by only rebuilding pages that depend on the changed parts of the model.
 class AppRouter {
   final ValueNotifier<AppModel> modelNotifier;
   late final GoRouter config;
