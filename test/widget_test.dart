@@ -6,26 +6,26 @@ import 'package:flutter_app_layered_architecture_with_go_router/frontend/ui_page
 import 'package:flutter_app_layered_architecture_with_go_router/frontend/controller_interfaces.dart';
 import 'package:flutter_app_layered_architecture_with_go_router/backend/domain_model.dart';
 
-CounterUpView buildMyWidget(ValueNotifier<AppModel> valueNotifier) {
-  return CounterUpView(controller: MockController(valueNotifier));
+CounterUpView buildMyWidget(MockController controller) {
+  return CounterUpView(controller: controller);
 }
 
-ValueListenableBuilder _bootstrap(ValueNotifier<AppModel> valueNotifier) => ValueListenableBuilder(
-  valueListenable: valueNotifier,
-  builder: (_,_,_) => buildMyWidget(valueNotifier),
+ValueListenableBuilder _bootstrap(MockController controller) => ValueListenableBuilder(
+  valueListenable: controller.valueNotifier,
+  builder: (_,_,_) => buildMyWidget(controller),
 );
 
-MaterialApp bootstrapApp(ValueNotifier<AppModel> valueNotifier) => MaterialApp(
-  home: _bootstrap(valueNotifier),
+MaterialApp bootstrapApp(MockController controller) => MaterialApp(
+  home: _bootstrap(controller),
 );
 
-MaterialApp bootstrapRouter(ValueNotifier<AppModel> valueNotifier) => MaterialApp.router(
+MaterialApp bootstrapRouter(MockController controller) => MaterialApp.router(
   routerConfig: GoRouter(
     initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
-        builder: (_,_) => _bootstrap(valueNotifier),
+        builder: (_,_) => _bootstrap(controller),
       ),
     ]
   )
@@ -33,10 +33,13 @@ MaterialApp bootstrapRouter(ValueNotifier<AppModel> valueNotifier) => MaterialAp
 
 void main() {
   testWidgets('CounterUpView smoke test', (WidgetTester tester) async {
-    final valueNotifier = ValueNotifier<AppModel>(AppModel(42));
-    final app = bootstrapRouter(valueNotifier);
+    final controller = MockController(ValueNotifier<AppModel>(AppModel(42)));
+    final app = bootstrapRouter(controller);
     await tester.pumpWidget(app);
     expect(find.text('Value: 42'), findsOneWidget);
+    controller.increment();
+    await tester.pump();
+    expect(find.text('Value: 43'), findsOneWidget);
   });
 }
 
