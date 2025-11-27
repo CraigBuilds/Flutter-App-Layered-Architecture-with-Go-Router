@@ -1,6 +1,6 @@
 // The business logic controllers depend on the domain model and controller interfaces
-import 'L1_domain_model.dart';
-import '../frontend/L1_controller_interfaces.dart';
+import 'domain_model.dart';
+import '../frontend/controller_interfaces.dart';
 
 // ------------------- 02: Business Logic Layer (Controllers) ------------------
 // Mutations to the domain model are done here, not in the domain layer (below) or the UI layer (above).

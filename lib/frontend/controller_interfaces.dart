@@ -1,5 +1,5 @@
 // The controller interfaces depend on the domain model
-import '../backend/L1_domain_model.dart';
+import '../backend/domain_model.dart';
 
 // ------------------- Controller Interfaces ------------------
 // The UI pages depend on these interfaces, not the concrete implementations. This completely decouples the front-end layer from the back-end layer.

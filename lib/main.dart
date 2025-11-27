@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // The main app depends on the domain model and the router
-import 'backend/L1_domain_model.dart';
-import 'frontend/L2_router.dart';
+import 'backend/domain_model.dart';
+import 'frontend/router.dart';
 
 void main() {
   

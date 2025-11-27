@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart'; //for context.go
 // The UI pages depend on the controller interfaces and UI widgets
-import 'L1_controller_interfaces.dart';
-import 'L4_ui_widgets.dart';
+import 'controller_interfaces.dart';
+import 'ui_widgets.dart';
 
 // ------------------- UI Layer: Views ------------------
 // Pages are the main screens of our application.
