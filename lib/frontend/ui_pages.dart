@@ -25,7 +25,7 @@ class CounterUpView extends StatelessWidget {
   Widget build(BuildContext ctx) => Scaffold(
     body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.go('/details/${controller.model.counter}')),
     floatingActionButton: PlusMinusFloatingActionButton(onPlus: controller.increment),
-    appBar: NavigationAppBar(currentURL: ctx.location, onMinus: () => ctx.go('/down'), onBack: () => ctx.pop()),
+    appBar: NavigationAppBar(currentURL: ctx.location, onMinus: () => ctx.go('/down')),
   );
 }
 
@@ -37,7 +37,7 @@ class CounterDownView extends StatelessWidget {
   Widget build(BuildContext ctx) => Scaffold(
     body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.go('/details/${controller.model.counter}')), 
     floatingActionButton: PlusMinusFloatingActionButton(onMinus: controller.decrement),
-    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.go('/up'), onBack: () => ctx.pop()),
+    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.go('/up')),
   );
 }
 
@@ -49,7 +49,7 @@ class NumberDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => Scaffold(
-    appBar: NavigationAppBar(currentURL: ctx.location, onBack: () => ctx.pop()),
+    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.go('/up'), onMinus: () => ctx.go('/down'), onBack: () => ctx.pop()),
     body: GiantCenteredValue(value: controller.number),
   );
 }
@@ -58,5 +58,5 @@ class NumberDetailsView extends StatelessWidget {
 
 // Extension method to get the current location from the BuildContext
 extension AnotherGoRouterHelper on BuildContext {
-  String get location => GoRouter.of(this).state.fullPath!;
+  String get location => GoRouter.of(this).state.matchedLocation;
 }
