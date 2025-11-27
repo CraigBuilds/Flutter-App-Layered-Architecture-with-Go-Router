@@ -5,12 +5,12 @@ final globalValueNotifier = ValueNotifier<int>(42);
 
 void main() {
   testWidgets('Proof of Concept Test', (WidgetTester tester) async {
-    final app = bootstrap((_,_,_) => Text('${globalValueNotifier.value}'));
+    final app = bootstrap((_,value,_) => Text('$value'));
     await tester.pumpWidget(app);
     expect(find.text('42'), findsOneWidget, reason: 'Initial value should be 42');
     globalValueNotifier.value = 43;
     expect(find.text('43'), findsNothing, reason: 'Value should not update until widget is pumped again');
-    await tester.pumpWidget(app);
+    await tester.pump();
     expect(find.text('43'), findsOneWidget, reason: 'Value should update to 43 after pumping the widget again');
   });
 }
