@@ -7,6 +7,13 @@ Text buildMyWidget<B,T,W>(B _, T value, W _) {
   return Text('$value');
 }
 
+MaterialApp bootstrap() => MaterialApp(
+  home: ValueListenableBuilder(
+    valueListenable: globalValueNotifier,
+    builder: buildMyWidget,
+  ),
+);
+
 void main() {
   testWidgets('Proof of Concept Test', (WidgetTester tester) async {
     final app = bootstrap();
@@ -18,10 +25,3 @@ void main() {
     expect(find.text('43'), findsOneWidget, reason: 'Value should update to 43 after pumping the widget again');
   });
 }
-
-MaterialApp bootstrap() => MaterialApp(
-  home: ValueListenableBuilder(
-    valueListenable: globalValueNotifier,
-    builder: buildMyWidget,
-  ),
-);
