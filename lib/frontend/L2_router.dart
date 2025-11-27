@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 // The router depends on the domain model, business logic controllers, and UI pages
-import '01_domain_model.dart';
-import '02_business_logic_controllers.dart';
-import '03_ui_pages.dart';
+import '../backend/L1_domain_model.dart';
+import '../backend/L2_business_logic_controllers.dart';
+import 'L3_ui_pages.dart';
 
 // ------------------- UI Layer: Router ------------------
 

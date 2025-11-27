@@ -1,6 +1,6 @@
 //The app model does not depend on anything else (no imports needed)
 
-// ------------------- Domain Layer ------------------
+// ------------------- 01: Domain Layer ------------------
 // The data used to define the state of the application (defines how the UI looks at any point in time)
 // It is a modeled after a domain area (e.g robotics, banking, fitness, etc) and can use structures that best represent that domain.
 // In this example, we have a simple counter application, so the domain model is just a single integer value.
