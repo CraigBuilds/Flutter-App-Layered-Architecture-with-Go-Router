@@ -6,7 +6,6 @@ import 'ui_widgets.dart';
 
 // ------------------- UI Layer: Views ------------------
 // Pages are the main screens of our application.
-// They are declarative, and they compose smaller widgets together to form the full screen UI.
 // They are injected with a controller containing the latest model data, and methods to handle user interactions.
 // They are completely stateless, and the content is derived only from the domain model.
 // They use controllers to handle user interactions.
