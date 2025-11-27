@@ -22,10 +22,10 @@ class CounterUpView extends StatelessWidget {
   const CounterUpView({super.key, required this.controller});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: CenteredValue(value: controller.model.counter),
+  Widget build(BuildContext ctx) => Scaffold(
+    body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.go('/details/${controller.model.counter}')),
     floatingActionButton: PlusMinusFloatingActionButton(onPlus: controller.increment),
-    appBar: BackForthAppBar(onBack: () => context.go('/down'), onForth: () => context.go('/up') ),
+    appBar: NavigationAppBar(currentURL: ctx.location, onMinus: () => ctx.go('/down'), onBack: () => ctx.pop()),
   );
 }
 
@@ -34,9 +34,29 @@ class CounterDownView extends StatelessWidget {
   const CounterDownView({super.key, required this.controller});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: CenteredValue(value: controller.model.counter),
+  Widget build(BuildContext ctx) => Scaffold(
+    body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.go('/details/${controller.model.counter}')), 
     floatingActionButton: PlusMinusFloatingActionButton(onMinus: controller.decrement),
-    appBar: BackForthAppBar(onBack: () => context.go('/up'), onForth: () => context.go('/down')),
+    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.go('/up'), onBack: () => ctx.pop()),
   );
+}
+
+
+///Tells you a fact about a number. This is an example of a page that requires an input parameter (the number to show details for).
+class NumberDetailsView extends StatelessWidget {
+  final ISelectedNumberController controller;
+  const NumberDetailsView({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext ctx) => Scaffold(
+    appBar: NavigationAppBar(currentURL: ctx.location, onBack: () => ctx.pop()),
+    body: GiantCenteredValue(value: controller.number),
+  );
+}
+
+
+
+// Extension method to get the current location from the BuildContext
+extension AnotherGoRouterHelper on BuildContext {
+  String get location => GoRouter.of(this).state.fullPath!;
 }

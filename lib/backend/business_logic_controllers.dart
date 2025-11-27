@@ -38,3 +38,11 @@ class DownController implements IDownController {
     onModelChanged(newValue);
   }
 }
+
+class SelectedNumberController implements ISelectedNumberController {
+  
+  @override
+  final int number;
+
+  SelectedNumberController({required this.number});
+}

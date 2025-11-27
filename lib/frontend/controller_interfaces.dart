@@ -13,3 +13,7 @@ abstract class IDownController {
   void decrement();
   AppModel get model;
 }
+
+abstract class ISelectedNumberController {
+  int get number;
+}

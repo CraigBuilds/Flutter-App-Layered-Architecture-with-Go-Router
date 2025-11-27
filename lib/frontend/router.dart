@@ -49,9 +49,16 @@ class AppRouter {
             builder: (_, _, _) => CounterDownView(controller: DownController(model: modelNotifier.value, onModelChanged: _updateNotifier)),
           ),
         ),
+        GoRoute(
+          path: '/details/:number',
+          builder: (context, state) => ValueListenableBuilder(
+            valueListenable: modelNotifier,
+            builder: (_, _, _) => NumberDetailsView(controller: SelectedNumberController(number: int.parse(state.pathParameters['number']!))),
+          ),
+        ),
         //Once we add more routes we can use the generic _route method to reduce code duplication:
         _route(
-          path: '/double',
+          path: '/also_up',
           controllerBuilder: (model, onModelChanged) => UpController(model: model, onModelChanged: onModelChanged),
           viewBuilder: (controller) => CounterUpView(controller: controller),
         ),
