@@ -43,6 +43,7 @@ class CounterDownView extends StatelessWidget {
 
 
 ///Tells you a fact about a number. This is an example of a page that requires an input parameter (the number to show details for).
+///The router provides that parameter for you by injecting the correct controller into this view.
 class NumberDetailsView extends StatelessWidget {
   final ISelectedNumberController controller;
   const NumberDetailsView({super.key, required this.controller});
