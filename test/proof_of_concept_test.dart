@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 final globalValueNotifier = ValueNotifier<int>(42);
 
-Widget buildMyWidget<B,T,W>(B _, T value, W _) {
+Text buildMyWidget<B,T,W>(B _, T value, W _) {
   return Text('$value');
 }
 
