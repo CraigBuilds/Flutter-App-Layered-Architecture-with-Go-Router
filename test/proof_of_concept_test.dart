@@ -20,7 +20,7 @@ void main() {
 }
 
 MaterialApp bootstrap() => MaterialApp(
-  home: ValueListenableBuilder<int>(
+  home: ValueListenableBuilder(
     valueListenable: globalValueNotifier,
     builder: buildMyWidget,
   ),
