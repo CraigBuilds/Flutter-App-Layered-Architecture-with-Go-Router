@@ -23,9 +23,9 @@ class CounterUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => Scaffold(
-    body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.go('/details/${controller.model.counter}')),
+    body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.push('/details/${controller.model.counter}')),
     floatingActionButton: PlusMinusFloatingActionButton(onPlus: controller.increment),
-    appBar: NavigationAppBar(currentURL: ctx.location, onMinus: () => ctx.go('/down')),
+    appBar: NavigationAppBar(currentURL: ctx.location, onMinus: () => ctx.push('/down'), onBack: () => ctx.canPop() ? ctx.pop() : null),
   );
 }
 
@@ -35,9 +35,9 @@ class CounterDownView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => Scaffold(
-    body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.go('/details/${controller.model.counter}')), 
+    body: CenteredValue(value: controller.model.counter, onValueTapped: () => ctx.push('/details/${controller.model.counter}')), 
     floatingActionButton: PlusMinusFloatingActionButton(onMinus: controller.decrement),
-    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.go('/up')),
+    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.push('/up'), onBack: () => ctx.canPop() ? ctx.pop() : null),
   );
 }
 
@@ -49,7 +49,7 @@ class NumberDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => Scaffold(
-    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.go('/up'), onMinus: () => ctx.go('/down'), onBack: () => ctx.pop()),
+    appBar: NavigationAppBar(currentURL: ctx.location, onPlus: () => ctx.push('/up'), onMinus: () => ctx.push('/down'), onBack: () => ctx.pop()),
     body: GiantCenteredValue(value: controller.number),
   );
 }
