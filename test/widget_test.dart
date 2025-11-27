@@ -7,25 +7,39 @@ import 'package:flutter_app_layered_architecture_with_go_router/frontend/control
 import 'package:flutter_app_layered_architecture_with_go_router/backend/domain_model.dart';
 
 final globalValueNotifier = ValueNotifier<AppModel>(AppModel(42));
+final globalController = MockController();
 
 void main() {
   testWidgets('CounterUpView smoke test', (WidgetTester tester) async {
-    final controller = MockController();
-    final view = build(CounterUpView(controller: controller));
-    await tester.pumpWidget(view);
+    var testLog = <String>[];
+    final app = bootstrap(() => CounterUpView(controller: globalController), testLog);
+    await tester.pumpWidget(app);
+    globalValueNotifier.value = AppModel(43);
+    await tester.pumpWidget(app);
+    expect(find.text('Value: 43'), findsOneWidget);
   });
 }
 
 /// Wraps the given child widget with the minimal functionality needed to test UI pages:
-Widget build(Widget child) {
+MaterialApp bootstrap<T extends Widget>(T Function() childBuilder, List<String> debugInfo) {
   //Wrap the child in a ValueListenableBuilder so it is rebuilt whenever the global valueNotifier changes
-  final reactiveChild = ValueListenableBuilder(valueListenable: globalValueNotifier, builder: (_, _, _) => child);
-  //Wrap the reactive child in a GoRouter so it's build context contains a GoRouter object (required because UI pages use context.go)
+  final childListenableBuilder = ValueListenableBuilder(
+    valueListenable: globalValueNotifier,
+    builder: (_, _, _) {
+      debugInfo.log("Rebuilding ${T.runtimeType}");
+      return childBuilder();
+    }
+  );
+
+  //Wrap the childListenableBuilder in a GoRouter so it's build context contains a GoRouter object (required because UI pages use context.go)
   final routableChild = GoRouter(
     routes: [
       GoRoute(
         path: '/',
-        builder: (_, _) => reactiveChild,
+        builder: (_, _) {
+          debugInfo.log("Building ${childListenableBuilder.runtimeType}}");
+          return childListenableBuilder;
+        },
       ),
     ],
   );
@@ -51,5 +65,12 @@ class MockController implements IUpController, IDownController {
   @override
   void decrement() {
     globalValueNotifier.value = AppModel(model.counter - 1);
+  }
+}
+
+extension on List<String> {
+  void log(String message) {
+    this.add(message);
+    debugPrint(message);
   }
 }
