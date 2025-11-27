@@ -2,6 +2,11 @@
 import '01_domain_model.dart';
 import '02_controller_interfaces.dart';
 
+// ------------------- Business Logic Layer ------------------
+// Mutations to the domain model are done here, not in the domain layer (below) or the UI layer (above).
+// The controllers are decoupled from any specific state management approach. They use a onModelChanged callback which can be wired up to any state management solution.
+// We can separate controllers for different use cases (e.g incrementing vs decrementing), so that UI components only have access to the functionality they need.
+
 typedef ModelChangedCallback = void Function(AppModel model);
 
 class UpController implements IUpController {

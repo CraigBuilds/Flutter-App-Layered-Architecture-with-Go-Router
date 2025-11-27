@@ -5,6 +5,7 @@ import '01_domain_model.dart';
 import '02_business_logic_controllers.dart';
 import '03_ui_pages.dart';
 
+// ------------------- UI Layer: Router ------------------
 
 // Three Responsibilities:
 // 1. Map route names to UI pages (Navigation Modelling)

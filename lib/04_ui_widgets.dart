@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+// ------------------- UI Layer: Components ------------------
+// Widgets are the building blocks of our UI. They should be as dumb as possible. They simply display the data they are given, and call the methods they
+// are given when user interactions occur. They should not have any knowledge of the domain model or controllers.
+// They can use the BuildContext to retrieve theme data as needed. It is better to do that here rather than in the parent, so that widgets have consistent
+// theming across the application.
+
 class CenteredValue extends StatelessWidget {
   final int value;
   const CenteredValue({super.key, required this.value});
