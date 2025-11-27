@@ -3,7 +3,7 @@
 A demonstration of a layered architecture using Flutter and GoRoute.
 
 | Component | Layer | Responsibility | Notes | Dependencies |
-|------|-------|----------------|
+|------|-------|----------------|-----|-----|
 | `main function`   | Entry Point    | Bootstrap, composition root  |                                                                   | `AppModel`, `AppRouter` |
 | `AppModel`        | Domain         | Immutable state definition   | Defines structure of domain data                                  | depends on nothing     |
 | `Controllers`     | Business Logic | State mutation logic         | Decoupled from reactivity approach                                | `IControllers`          |
