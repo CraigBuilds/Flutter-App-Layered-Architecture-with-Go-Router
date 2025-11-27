@@ -27,7 +27,7 @@ class AppRouter {
   final ValueNotifier<AppModel> modelNotifier;
   late final GoRouter config;
 
-  void onModelChanged(AppModel model) {
+  void _updateNotifier(AppModel model) {
     modelNotifier.value = model;
   }
 
@@ -39,17 +39,42 @@ class AppRouter {
           path: '/up',
           builder: (_, _) => ValueListenableBuilder(
             valueListenable: modelNotifier,
-            builder: (_, _, _) => CounterUpView(controller: UpController(model: modelNotifier.value, onModelChanged: onModelChanged)),
+            builder: (_, _, _) => CounterUpView(controller: UpController(model: modelNotifier.value, onModelChanged: _updateNotifier)),
           ),
         ),
         GoRoute(
           path: '/down',
           builder: (_, _) => ValueListenableBuilder(
             valueListenable: modelNotifier,
-            builder: (_, _, _) => CounterDownView(controller: DownController(model: modelNotifier.value, onModelChanged: onModelChanged)),
+            builder: (_, _, _) => CounterDownView(controller: DownController(model: modelNotifier.value, onModelChanged: _updateNotifier)),
           ),
         ),
+        //Once we add more routes we can use the generic _route method to reduce code duplication:
+        _route(
+          path: '/double',
+          controllerBuilder: (model, onModelChanged) => UpController(model: model, onModelChanged: onModelChanged),
+          viewBuilder: (controller) => CounterUpView(controller: controller),
+        ),
       ],
+    );
+  }
+
+  GoRoute _route<C>({
+    required String path,
+    required C Function(AppModel model,void Function(AppModel) onModelChanged) controllerBuilder,
+    required Widget Function(C controller) viewBuilder,
+  }) {
+    return GoRoute(
+      path: path,
+      builder: (_, __) {
+        return ValueListenableBuilder<AppModel>(
+          valueListenable: modelNotifier,
+          builder: (_, model, __) {
+            final controller = controllerBuilder(model, _updateNotifier);
+            return viewBuilder(controller);
+          },
+        );
+      },
     );
   }
 }
