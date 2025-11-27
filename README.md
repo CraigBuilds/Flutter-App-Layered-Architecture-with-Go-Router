@@ -12,6 +12,17 @@ A demonstration of a layered architecture using Flutter and GoRoute.
 | `Views`           | Frontend       | Screen composition           | Stateless (model driven). Use controllers for user interaction    | `Widgets` `IControllers`  |
 | `Widgets`         | Frontend       | Reusable UI components       | Dumb. Do not know about domain or controllers                     | depends on nothing       |
 
+### Data Flow (Interaction)
+
+- User Action (tap button)
+- Widget calls callback (e.g onPlus, onMinus)
+- Page Calls Controller (e.g controller.increment)
+- Controller Mutate Model (e.g using model.copyWith)
+- Controller triggers onModelChangedCallback
+- ValueNotifier updated (the router wires the Controller onModelChangedCallback to the ValueNotifier)
+- ValueListenableBuilder rebuilds (rebuilds the Pages and Controllers with the new model)
+- UI reflects new state (Page receives new controller with updated model)
+
 ## Getting Started
 
 `flutter run -d windows`
